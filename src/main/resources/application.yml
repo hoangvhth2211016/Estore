@@ -1,0 +1,86 @@
+
+
+spring:
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASS}
+    driver-class-name: ${DB_DRIVER}
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    database: ${DB}
+    database-platform: ${DB_PLATFORM}
+  mail:
+    host: ${MAIL_HOST}
+    port: ${MAIL_PORT}
+    username: ${MAIL_USER}
+    password: ${MAIL_PASS}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  redis:
+    host: ${REDIS_HOST}
+    port: ${REDIS_PORT}
+  rabbitmq:
+    host: ${RABBITMQ_HOST}
+    port: ${RABBITMQ_PORT}
+    username: ${RABBITMQ_USERNAME}
+    password: ${RABBITMQ_PASSWORD}
+    listener:
+      simple:
+        retry:
+          enabled: true
+          initial-interval: 3s
+          max-attempts: 3
+          max-interval: 10s
+          multiplier: 2
+
+server:
+  servlet:
+    contextPath: /api/v1
+
+security:
+  jwt:
+    token:
+      secret-key: ${JWT_SECRET_KEY}
+      issuer: ${JWT_ISSUER}
+
+store:
+  app:
+    url: ${STORE_APP_URL}
+  email: ${STORE_EMAIL}
+
+cloudinary:
+  name: ${CLOUD_NAME}
+  api_key: ${CLOUD_KEY}
+  api_secret: ${CLOUD_SECRET}
+  secure: true
+  root-folder: estore/
+
+rabbitmq:
+  order:
+    exchange: order.exchange
+    process:
+      queue: order.process.queue
+      key: order.process.key
+    mail:
+      queue: order.mail.queue
+      key: order.mail.key
+  mail:
+    exchange: mail.exchange
+    queue: mail.process.queue
+    key: mail.process.key
+  dead_letter:
+    exchange: dead_letter.exchange
+    queue: dead_letter.queue
+    key: dead_letter.key
+
