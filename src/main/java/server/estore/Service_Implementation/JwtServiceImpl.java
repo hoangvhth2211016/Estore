@@ -31,7 +31,6 @@ public class JwtServiceImpl implements JwtService {
         algorithm = Algorithm.HMAC256(secretKey);
     }
 
-    // create an access token
     public String createAccessToken(User user){
         return JWT.create()
                 .withIssuer(issuer)
@@ -42,7 +41,6 @@ public class JwtServiceImpl implements JwtService {
                 .sign(algorithm);
     }
 
-    // create a refresh token
     public String createRefreshToken(User user){
         return JWT.create()
                 .withIssuer(issuer)
@@ -53,34 +51,28 @@ public class JwtServiceImpl implements JwtService {
                 .sign(algorithm);
     }
 
-    // decode token with assigned algorithm
     public DecodedJWT decodeToken(String token){
         JWTVerifier verifier = JWT.require(algorithm).build();
         return verifier.verify(token);
 
     }
 
-    // extract username from token
     public String extractUsername(String token){
         return decodeToken(token).getClaim("username").asString();
     }
 
-    // extract role from token
     public String extractRole(String token){
         return decodeToken(token).getClaim("role").asString();
     }
 
-    // extract expiration from token
     public Date extractExpiration(String token){
         return decodeToken(token).getExpiresAt();
     }
 
-    // check if token already expired
     public boolean isTokenExpired(String token){
         return extractExpiration(token).before(new Date());
     }
 
-    // check if the token is valid for current user
     public boolean isTokenValid(String token, User user){
         String username = extractUsername(token);
         return username.equals(user.getUsername());

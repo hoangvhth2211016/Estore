@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class CloudServiceImpl implements CloudService {
+public class    CloudServiceImpl implements CloudService {
 
     @Value("${cloudinary.root-folder}")
     private String rootFolder;

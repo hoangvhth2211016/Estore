@@ -77,6 +77,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductRes update(ProductDto dto, Long productId) {
+        System.out.println(dto);
         Product currentProduct = findById(productId);
         Product updatedProduct =  productRepo.save(productMapper.updateEntity(dto, currentProduct));
         return productMapper.toProductRes(updatedProduct);

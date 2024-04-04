@@ -20,7 +20,10 @@ public interface ProductMapper {
     ProductRes toProductRes(Product product);
 
     List<ProductDto> toDtoList(List<Product> products);
-
+    
+    
+    @Mapping(target = "brand", source = "brandId")
+    @Mapping(target = "category", source = "catId")
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     Product updateEntity(ProductDto productDto, @MappingTarget Product product);
 }

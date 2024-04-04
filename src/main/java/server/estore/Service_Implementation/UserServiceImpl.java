@@ -56,13 +56,11 @@ public class UserServiceImpl implements UserService {
         dto.setPassword(passwordEncoder.encode(dto.getPassword()));
         User userObj = userMapper.fromRegisterDtoToUser(dto);
         userObj.setRole(Role.CLIENT);
-        //save user to database
+
         User newUser = userRepo.save(userObj);
 
-        // save verification key to database
         Verification verification = verificationService.create(newUser);
 
-        // send email
         String verificationUrl = url + "/account/activate?key=" + verification.getKey()+"&email="+verification.getUser().getEmail();
        
         MailTemplate mailTemplate = MailTemplate.builder()

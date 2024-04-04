@@ -33,20 +33,17 @@ public class VerificationServiceImpl implements VerificationService {
 
     @Override
     public User confirm(VerificationKeyDto dto) {
-        // check verification key existence
+
         Verification verification = verificationRepo
                 .findByKey(dto.getKey())
                 .orElseThrow(()-> new NotFoundException("Verification key"));
 
-        // check if user's email same as sent email
         AppUtil.verifyObj(verification.getUser().getEmail(), dto.getEmail());
 
-        // check if verification key already validated
         if(verification.getValidated()){
             throw new ConflictException("Key already validated");
         }
 
-        // check if verification key already expired
         if(verification.getExpiredAt().isBefore(LocalDateTime.now())){
             throw new KeyExpiredException("Key expired");
         }

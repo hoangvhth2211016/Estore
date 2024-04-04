@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import server.estore.Model.Product.ProductStatus;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 
@@ -16,7 +17,7 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductDto {
+public class ProductDto implements Serializable {
 
     @NotBlank
     private String title;

@@ -36,16 +36,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authHeader = request.getHeader("Authorization");
         try{
-            // check if Authorization header available
             if(authHeader != null){
                 String[] headerElements = authHeader.split(" ");
-                //check if header in correct form
                 if(headerElements.length == 2 && "Bearer".equals(headerElements[0])){
                     String token = headerElements[1];
-                    // check if token already expired
                     if(!jwtService.isTokenExpired(token)){
                         String username = jwtService.extractUsername(token);
-                        // check username available
                         if(username != null && SecurityContextHolder.getContext().getAuthentication() == null){
                             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
                             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
